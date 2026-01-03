@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Alycia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #f8f6f4;
+            --accent: #a67c6d;
+            --text-main: #3d3d3d;
+            --glass: rgba(255, 255, 255, 0.95);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--glass);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(166, 124, 109, 0.2);
+            text-align: center;
+        }
+
+        h1, h2 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--accent);
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        p { line-height: 1.8; margin-bottom: 15px; font-size: 1.05rem; }
+
+        .highlight {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--accent);
+            display: block;
+            margin: 15px 0;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .btn {
+            background-color: white;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover:not(:disabled) {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn:disabled { opacity: 0.2; }
+
+        .confirm-btn {
+            margin-top: 25px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(166, 124, 109, 0.3);
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(166, 124, 109, 0.4);
+        }
+
+        .audio-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 10px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body onclick="startMusic()">
+
+    <div class="audio-status">Som ambiente ativo</div>
+
+    <audio id="bgMusic" loop autoplay>
+        <source src="https://www.dropbox.com/scl/fi/1szyia8jpnib8mopqiqj9/ssstik.io_1767474077805.mp3?rlkey=rtxehc7hxmux4fz02nw4jp4u5&st=5ioqd925&dl=1" type="audio/mpeg">
+    </audio>
+
+    <div class="slider-wrapper" id="slider">
+        <div class="slide"><div class="card"><h1>Alycia,</h1><p>Criei este espaço porque não queria que as minhas palavras se perdessem.</p><span class="highlight">Eu menti... e você merecia a verdade.</span></div></div>
+        <div class="slide"><div class="card"><h2>A Verdade</h2><p>Eu menti. Não foi um erro pequeno nem sem importância.</p><p>Eu sei que isso quebrou o que tínhamos de mais valioso:</p><span class="highlight">A sua confiança em mim.</span></div></div>
+        <div class="slide"><div class="card"><h2>Responsabilidade</h2><p>Não há desculpas. Mentir foi uma escolha errada que eu fiz por medo.</p><p>Assumo toda a responsabilidade por ter te magoado.</p></div></div>
+        <div class="slide"><div class="card"><h2>Aprendizado</h2><p>Entendi que a verdade pode ser difícil de encarar,</p><p>mas a mentira destrói o que levamos tempo a construir.</p><span class="highlight">E eu nunca quis te perder.</span></div></div>
+        <div class="slide"><div class="card"><h2>Mudança</h2><p>Não espero um perdão imediato. Confiança recupera-se com atos.</p><p>Prometo-me ser honesto contigo, mesmo quando for desconfortável.</p></div></div>
+
+        <div class="slide">
+            <div class="card">
+                <h2>A decisão é sua</h2>
+                <p>Vou respeitar o teu tempo e o teu espaço.</p>
+                <p>Mas não posso esconder que sinto muito a tua falta.</p>
+                <span class="highlight">Me desbloqueia, estou com saudades de conversar com você.</span>
+                
+                <a href="https://wa.me/65992767280?text=Eu%20li%20tudo,%20Alycia" class="confirm-btn">
+                    Me desbloqueia?
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn" id="prevBtn" onclick="changeSlide(-1); event.stopPropagation();" disabled>Anterior</button>
+        <button class="btn" id="nextBtn" onclick="changeSlide(1); event.stopPropagation();">Próximo</button>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const slider = document.getElementById('slider');
+        const audio = document.getElementById('bgMusic');
+        const totalSlides = 6;
+
+        function startMusic() { if (audio.paused) { audio.play(); } }
+
+        function changeSlide(direction) {
+            startMusic();
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex >= totalSlides) currentIndex = totalSlides - 1;
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === totalSlides - 1;
+        }
+    </script>
+</body>
+</html>
