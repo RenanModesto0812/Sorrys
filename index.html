@@ -13,7 +13,7 @@
             --glass: rgba(255, 255, 255, 0.95);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: var(--bg-base);
@@ -23,6 +23,7 @@
             width: 100vw;
             overflow: hidden;
             position: relative;
+            touch-action: manipulation;
         }
 
         .slider-wrapper {
@@ -89,18 +90,10 @@
             border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
             text-transform: uppercase;
             font-size: 0.75rem;
             letter-spacing: 1px;
         }
-
-        .btn:hover:not(:disabled) {
-            background-color: var(--accent);
-            color: white;
-        }
-
-        .btn:disabled { opacity: 0.2; }
 
         .confirm-btn {
             margin-top: 25px;
@@ -109,21 +102,12 @@
             border: none;
             padding: 16px 32px;
             border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(166, 124, 109, 0.3);
-        }
-
-        .confirm-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(166, 124, 109, 0.4);
         }
 
         .audio-status {
@@ -134,59 +118,70 @@
             color: var(--accent);
             text-transform: uppercase;
             font-weight: bold;
+            opacity: 0.5;
         }
     </style>
 </head>
-<body onclick="startMusic()">
+<body id="body">
 
-    <div class="audio-status">Som ambiente ativo</div>
+    <div class="audio-status" id="audioInfo">Toque para ler</div>
 
-    <audio id="bgMusic" loop autoplay>
+    <audio id="bgMusic" loop preload="auto" playsinline>
         <source src="https://www.dropbox.com/scl/fi/1szyia8jpnib8mopqiqj9/ssstik.io_1767474077805.mp3?rlkey=rtxehc7hxmux4fz02nw4jp4u5&st=5ioqd925&dl=1" type="audio/mpeg">
     </audio>
 
     <div class="slider-wrapper" id="slider">
         <div class="slide"><div class="card"><h1>Alycia,</h1><p>Criei este espaço porque não queria que as minhas palavras se perdessem.</p><span class="highlight">Eu menti... e você merecia a verdade.</span></div></div>
-        <div class="slide"><div class="card"><h2>A Verdade</h2><p>Eu menti. Não foi um erro pequeno nem sem importância.</p><p>Eu sei que isso quebrou o que tínhamos de mais valioso:</p><span class="highlight">A sua confiança em mim.</span></div></div>
-        <div class="slide"><div class="card"><h2>Responsabilidade</h2><p>Não há desculpas. Mentir foi uma escolha errada que eu fiz por medo.</p><p>Assumo toda a responsabilidade por ter te magoado.</p></div></div>
-        <div class="slide"><div class="card"><h2>Aprendizado</h2><p>Entendi que a verdade pode ser difícil de encarar,</p><p>mas a mentira destrói o que levamos tempo a construir.</p><span class="highlight">E eu nunca quis te perder.</span></div></div>
-        <div class="slide"><div class="card"><h2>Mudança</h2><p>Não espero um perdão imediato. Confiança recupera-se com atos.</p><p>Prometo-me ser honesto contigo, mesmo quando for desconfortável.</p></div></div>
-
+        <div class="slide"><div class="card"><h2>A Verdade</h2><p>Eu menti. Não foi um erro pequeno nem sem importância.</p><span class="highlight">A sua confiança em mim.</span></div></div>
+        <div class="slide"><div class="card"><h2>Responsabilidade</h2><p>Não há desculpas. Mentir foi uma escolha errada que eu fiz por medo.</p><p>Assumo toda a responsabilidade.</p></div></div>
+        <div class="slide"><div class="card"><h2>Aprendizado</h2><p>A verdade pode ser difícil,</p><p>mas a mentira destrói o que levamos tempo a construir.</p><span class="highlight">E eu nunca quis te perder.</span></div></div>
+        <div class="slide"><div class="card"><h2>Mudança</h2><p>Confiança recupera-se com atos.</p><p>Prometo-me ser honesto contigo, mesmo quando for desconfortável.</p></div></div>
         <div class="slide">
             <div class="card">
                 <h2>A decisão é sua</h2>
                 <p>Vou respeitar o teu tempo e o teu espaço.</p>
-                <p>Mas não posso esconder que sinto muito a tua falta.</p>
                 <span class="highlight">Me desbloqueia, estou com saudades de conversar com você.</span>
-                
-                <a href="https://wa.me/65992767280?text=Eu%20li%20tudo,%20Alycia" class="confirm-btn">
-                    Me desbloqueia?
-                </a>
+                <a href="https://wa.me/65992767280?text=Eu%20li%20tudo,%20Alycia" class="confirm-btn">Me desbloqueia?</a>
             </div>
         </div>
     </div>
 
     <div class="controls">
-        <button class="btn" id="prevBtn" onclick="changeSlide(-1); event.stopPropagation();" disabled>Anterior</button>
-        <button class="btn" id="nextBtn" onclick="changeSlide(1); event.stopPropagation();">Próximo</button>
+        <button class="btn" id="prevBtn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <button class="btn" id="nextBtn" onclick="changeSlide(1)">Próximo</button>
     </div>
 
     <script>
         let currentIndex = 0;
+        let musicStarted = false;
         const slider = document.getElementById('slider');
         const audio = document.getElementById('bgMusic');
-        const totalSlides = 6;
+        const audioInfo = document.getElementById('audioInfo');
 
-        function startMusic() { if (audio.paused) { audio.play(); } }
+        // Função para forçar o áudio no Safari/iOS
+        function initAudio() {
+            if (!musicStarted) {
+                audio.play().then(() => {
+                    musicStarted = true;
+                    audioInfo.innerText = "Som ativo";
+                }).catch(e => console.log("Aguardando interação real..."));
+            }
+        }
+
+        // Tenta iniciar no clique de qualquer botão ou no corpo da página
+        document.body.addEventListener('touchstart', initAudio, false);
+        document.body.addEventListener('click', initAudio, false);
 
         function changeSlide(direction) {
-            startMusic();
+            initAudio(); // Reforça o pedido de áudio ao trocar slide
+            
             currentIndex += direction;
             if (currentIndex < 0) currentIndex = 0;
-            if (currentIndex >= totalSlides) currentIndex = totalSlides - 1;
+            if (currentIndex >= 6) currentIndex = 5;
+            
             slider.style.transform = `translateX(-${currentIndex * 100}%)`;
             document.getElementById('prevBtn').disabled = currentIndex === 0;
-            document.getElementById('nextBtn').disabled = currentIndex === totalSlides - 1;
+            document.getElementById('nextBtn').disabled = currentIndex === 5;
         }
     </script>
 </body>
