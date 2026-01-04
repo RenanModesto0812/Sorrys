@@ -44,41 +44,57 @@
 
         .card {
             background: var(--glass);
-            padding: 40px;
+            padding: 30px;
             max-width: 500px;
-            width: 90%;
+            width: 95%;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             border: 1px solid rgba(166, 124, 109, 0.2);
             text-align: center;
         }
 
+        .video-container {
+            width: 100%;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+            line-height: 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        video {
+            width: 100%;
+            max-height: 350px;
+            display: block;
+        }
+
         h1, h2 {
             font-family: 'Cormorant Garamond', serif;
             color: var(--accent);
-            font-size: 2.2rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
         }
 
-        p { line-height: 1.8; margin-bottom: 15px; font-size: 1.05rem; }
+        p { line-height: 1.5; margin-bottom: 10px; font-size: 0.95rem; }
 
         .highlight {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--accent);
             display: block;
-            margin: 15px 0;
+            margin: 8px 0;
         }
 
         .controls {
             position: fixed;
-            bottom: 40px;
+            bottom: 30px;
             left: 0;
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             z-index: 100;
         }
 
@@ -86,45 +102,46 @@
             background-color: white;
             border: 2px solid var(--accent);
             color: var(--accent);
-            padding: 12px 35px;
+            padding: 10px 25px;
             border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             letter-spacing: 1px;
         }
 
+        .btn:disabled { opacity: 0.3; }
+
         .confirm-btn {
-            margin-top: 25px;
+            margin-top: 15px;
             background-color: var(--accent);
             color: white;
-            border: none;
-            padding: 16px 32px;
+            padding: 14px 28px;
             border-radius: 50px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            cursor: pointer;
             text-decoration: none;
             display: inline-block;
+            font-size: 0.8rem;
         }
 
         .audio-status {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 10px;
+            top: 15px;
+            right: 15px;
+            font-size: 9px;
             color: var(--accent);
             text-transform: uppercase;
             font-weight: bold;
-            opacity: 0.5;
+            opacity: 0.6;
         }
     </style>
 </head>
-<body id="body">
+<body>
 
-    <div class="audio-status" id="audioInfo">Toque para ler</div>
+    <div class="audio-status" id="audioInfo">Toque na tela</div>
 
     <audio id="bgMusic" loop preload="auto" playsinline>
         <source src="https://www.dropbox.com/scl/fi/1szyia8jpnib8mopqiqj9/ssstik.io_1767474077805.mp3?rlkey=rtxehc7hxmux4fz02nw4jp4u5&st=5ioqd925&dl=1" type="audio/mpeg">
@@ -132,10 +149,25 @@
 
     <div class="slider-wrapper" id="slider">
         <div class="slide"><div class="card"><h1>Alycia,</h1><p>Criei este espaço porque não queria que as minhas palavras se perdessem.</p><span class="highlight">Eu menti... e você merecia a verdade.</span></div></div>
-        <div class="slide"><div class="card"><h2>A Verdade</h2><p>Eu menti. Não foi um erro pequeno nem sem importância.</p><span class="highlight">A sua confiança em mim.</span></div></div>
-        <div class="slide"><div class="card"><h2>Responsabilidade</h2><p>Não há desculpas. Mentir foi uma escolha errada que eu fiz por medo.</p><p>Assumo toda a responsabilidade.</p></div></div>
+        <div class="slide"><div class="card"><h2>A Verdade</h2><p>Eu menti. Não foi um erro pequeno.</p><span class="highlight">A sua confiança em mim.</span></div></div>
+        <div class="slide"><div class="card"><h2>Responsabilidade</h2><p>Não há desculpas. Mentir foi uma escolha errada.</p><p>Assumo toda a responsabilidade.</p></div></div>
         <div class="slide"><div class="card"><h2>Aprendizado</h2><p>A verdade pode ser difícil,</p><p>mas a mentira destrói o que levamos tempo a construir.</p><span class="highlight">E eu nunca quis te perder.</span></div></div>
         <div class="slide"><div class="card"><h2>Mudança</h2><p>Confiança recupera-se com atos.</p><p>Prometo-me ser honesto contigo, mesmo quando for desconfortável.</p></div></div>
+        
+        <div class="slide">
+            <div class="card">
+                <h2>Um detalhe para você</h2>
+                <h2 class="highlight">Presente feito com muito carinho por mim, não é uma pandora ou um da vivara, mas é um feito por mim mesmo.</h2>
+                <div class="video-container">
+                    <video id="presenteVideo" controls playsinline>
+                        <source src="https://www.dropbox.com/scl/fi/uk8h1hqbb8uzb8ffmqpzn/presente.mp4?rlkey=v4pxt2wj0o50ud4qu4zdqlxk0&st=bz8zp2f5&raw=1" type="video/mp4">
+                        Seu navegador não suporta vídeos.
+                    </video>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 10px;">(Aperte o play acima)</p>
+            </div>
+        </div>
+
         <div class="slide">
             <div class="card">
                 <h2>A decisão é sua</h2>
@@ -156,32 +188,43 @@
         let musicStarted = false;
         const slider = document.getElementById('slider');
         const audio = document.getElementById('bgMusic');
+        const video = document.getElementById('presenteVideo');
         const audioInfo = document.getElementById('audioInfo');
+        const totalSlides = document.querySelectorAll('.slide').length;
 
-        // Função para forçar o áudio no Safari/iOS
         function initAudio() {
             if (!musicStarted) {
                 audio.play().then(() => {
                     musicStarted = true;
                     audioInfo.innerText = "Som ativo";
-                }).catch(e => console.log("Aguardando interação real..."));
+                }).catch(e => console.log("Aguardando interação..."));
             }
         }
 
-        // Tenta iniciar no clique de qualquer botão ou no corpo da página
-        document.body.addEventListener('touchstart', initAudio, false);
-        document.body.addEventListener('click', initAudio, false);
+        // Detecta interação para liberar áudio no mobile
+        document.body.addEventListener('click', initAudio, {once: false});
+        document.body.addEventListener('touchstart', initAudio, {once: false});
 
         function changeSlide(direction) {
-            initAudio(); // Reforça o pedido de áudio ao trocar slide
+            initAudio();
             
             currentIndex += direction;
             if (currentIndex < 0) currentIndex = 0;
-            if (currentIndex >= 6) currentIndex = 5;
+            if (currentIndex >= totalSlides) currentIndex = totalSlides - 1;
             
             slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
             document.getElementById('prevBtn').disabled = currentIndex === 0;
-            document.getElementById('nextBtn').disabled = currentIndex === 5;
+            document.getElementById('nextBtn').disabled = currentIndex === totalSlides - 1;
+
+            // Gerenciamento do Áudio vs Vídeo:
+            // Se entrar no slide do vídeo (penúltimo), abaixa o volume da música
+            if (currentIndex === totalSlides - 2) {
+                audio.volume = 0.2; 
+            } else {
+                audio.volume = 1.0;
+                if(video) video.pause(); // Pausa o vídeo se sair do slide dele
+            }
         }
     </script>
 </body>
